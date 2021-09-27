@@ -1,0 +1,288 @@
+Consider the Company database with following tables:
+
+1.Employee 
+Emp_No (PRIMARY KEY)
+Emp_Name
+Address
+Sex
+Dept 
+Salary
+DOJ
+Branch
+
+2.Department
+Dept_No (Primary Key)
+DName
+Mgr_Id
+Mgr_Strtdate
+Perform the following: 
+          1. Create Company database 
+          2. Viewing all databases 
+          3. Viewing all Tables in a Database, 
+          4. Creating Tables (With and Without Constraints) 
+          5. Inserting/Updating/Deleting Records in a Table 
+          6. Saving (Commit) and Undoing (rollback) 
+Consider the  Department table
+
+          1. Rename the table Department as Dept
+          2. Add a new column Phone with not null constraints to the existing table Dept  
+          3. Rename the column DName to Dept_Name in Dept table 
+          4. Change the data type of column DName as CHAR with size 10 
+          5. Delete table 
+Consider the Employee table
+ 
+          1. Display all the fields of the Employee table 
+          2. Retrieve employee number and their salary 
+          3. Retrieve average salary of all employee 
+          4. Retrieve number of employee 
+          5. Retrieve distinct number of employee 
+          6. Retrieve total salary of employee group by employee name and count similar    names 
+          7. Retrieve total salary of employee which is greater than >12000 
+          8. Display name of employee in descending order 
+          9. Display details of employee whose name is ‘Martin’ and salary greater than  20000;
+          
+ ANSWER:
+ 
+ mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank               |
+| company            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> use company;
+Database changed
+mysql> create table Employee
+    -> (Emp_no int not null,
+    -> Emp_name varchar(20) not null,
+    -> Address varchar(30) not null,
+    -> sex varchar(20) not null,
+    -> dept varchar(40) not null,
+    -> salary int,
+    -> Doj date not null,
+    -> Branch varchar(20),
+    -> primary key(Emp_no));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> describe Employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Emp_no   | int         | NO   | PRI | NULL    |       |
+| Emp_name | varchar(20) | NO   |     | NULL    |       |
+| Address  | varchar(30) | NO   |     | NULL    |       |
+| sex      | varchar(20) | NO   |     | NULL    |       |
+| dept     | varchar(40) | NO   |     | NULL    |       |
+| salary   | int         | YES  |     | NULL    |       |
+| Doj      | date        | NO   |     | NULL    |       |
+| Branch   | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into Employee
+    -> values
+    -> (1,'Abhirami','vadakara','female','sales',20000,'1996-07-03','kozhikode'),
+    -> (2,'akshaya','wayanad','male','production',40000,'1998-06-01','kalpatta'),
+    -> (3,'anusree','kanjagad','female','marketing',70000,'2005-02-02','kasargod'),
+    -> (4,'lallu','thiruvalla','male','finance',10000,'2006-09-11','Thiruvanathapuram');
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employee;
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+| Emp_no | Emp_name | Address    | sex    | dept       | salary | Doj        | Branch            |
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+|      1 | Abhirami   | vadakara   | female | sales      |  20000 | 1996-07-03 | kozhikode         |
+|      2 | akshaya   | wayanad    | male   | production |  40000 | 1998-06-01 | kalpatta          |
+|      3 | anusree    | kanjagad   | female | marketing  |  70000 | 2005-02-02 | kasargod          |
+|      4 | lallu    | thiruvalla | male   | finance    |  10000 | 2006-09-11 | Thiruvanathapuram |
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+4 rows in set (0.01 sec)
+
+mysql> update Employee
+    -> set Address='periya'
+    -> where Emp_no=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+| Emp_no | Emp_name | Address    | sex    | dept       | salary | Doj        | Branch            |
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+|      1 | Abhirami   | vadakara   | female | sales      |  20000 | 1996-07-03 | kozhikode         |
+|      2 | akshaya   | wayanad    | male   | production |  40000 | 1998-06-01 | kalpatta          |
+|      3 | anusree    | periya     | female | marketing  |  70000 | 2005-02-02 | kasargod          |
+|      4 | lallu     | thiruvalla | male   | finance    |  10000 | 2006-09-11 | Thiruvanathapuram |
++--------+----------+------------+--------+------------+--------+------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from Employee where Emp_no=4;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Employee;
++--------+----------+----------+--------+------------+--------+------------+-----------+
+| Emp_no | Emp_name | Address  | sex    | dept       | salary | Doj        | Branch    |
++--------+----------+----------+--------+------------+--------+------------+-----------+
+|      1 | Abhirami   | vadakara | female | sales      |  20000 | 1996-07-03 | kozhikode |
+|      2 | akshaya   | wayanad  | male   | production |  40000 | 1998-06-01 | kalpatta  |
+|      3 | anusree    | periya   | female | marketing  |  70000 | 2005-02-02 | kasargod  |
++--------+----------+----------+--------+------------+--------+------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select Emp_no,salary from Employee;
++--------+--------+
+| Emp_no | salary |
++--------+--------+
+|      1 |  20000 |
+|      2 |  40000 |
+|      3 |  70000 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(salary) as 'average salary'
+    -> from Employee;
++----------------+
+| average salary |
++----------------+
+|     43333.3333 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from Employee;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select distinct count(*) from Employee;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) as 'total salary' from Employee
+    -> group by Emp_name
+    -> having count(Emp_name)>1;
+Empty set (0.00 sec)
+
+mysql> select sum(salary) from Employee where salary>12000;
++-------------+
+| sum(salary) |
++-------------+
+|      130000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Emp_name from Employee order by Emp_name desc;
++----------+
+| Emp_name |
++----------+
+| akshaya   |
+| anusree     |
+| Abhirami  |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employee where Emp_name='akshaya' and salary>20000;
++--------+----------+---------+------+------------+--------+------------+----------+
+| Emp_no | Emp_name | Address | sex  | dept       | salary | Doj        | Branch   |
++--------+----------+---------+------+------------+--------+------------+----------+
+|      2 | akshaya  | wayanad | male | production |  40000 | 1998-06-01 | kalpatta |
++--------+----------+---------+------+------------+--------+------------+----------+
+1 row in set (0.00 sec)
+
+mysql> create database company;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use company;
+Database changed
+mysql> create table department(dept_no int primary key not null,d_name varchar(80) not null,mgr_id int not null,mgr_strtdate date not null);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into department(dept_no,d_name,mgr_id,mgr_strtdate) values(100,'production',200,'2009-11-02');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(dept_no,d_name,mgr_id,mgr_strtdate) values(101,'sales',201,'2002-12-25');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(dept_no,d_name,mgr_id,mgr_strtdate) values(102,'revenue',202,'2001-07-22');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(dept_no,d_name,mgr_id,mgr_strtdate) values(103,'administration',203,'2006-08-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(dept_no,d_name,mgr_id,mgr_strtdate) values(104,'marketing',204,'2009-04-01');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from department;
++---------+----------------+--------+--------------+
+| dept_no | d_name         | mgr_id | mgr_strtdate |
++---------+----------------+--------+--------------+
+|     100 | production     |    200 | 2009-11-02   |
+|     101 | sales          |    201 | 2002-12-25   |
+|     102 | revenue        |    202 | 2001-07-22   |
+|     103 | administration |    203 | 2006-08-05   |
+|     104 | marketing      |    204 | 2009-04-01   |
++---------+----------------+--------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table department rename to dept;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from dept;
++---------+----------------+--------+--------------+
+| dept_no | d_name         | mgr_id | mgr_strtdate |
++---------+----------------+--------+--------------+
+|     100 | production     |    200 | 2009-11-02   |
+|     101 | sales          |    201 | 2002-12-25   |
+|     102 | revenue        |    202 | 2001-07-22   |
+|     103 | administration |    203 | 2006-08-05   |
+|     104 | marketing      |    204 | 2009-04-01   |
++---------+----------------+--------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> alter table dept add phone int not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept;
++---------+----------------+--------+--------------+-------+
+| dept_no | d_name         | mgr_id | mgr_strtdate | phone |
++---------+----------------+--------+--------------+-------+
+|     100 | production     |    200 | 2009-11-02   |     0 |
+|     101 | sales          |    201 | 2002-12-25   |     0 |
+|     102 | revenue        |    202 | 2001-07-22   |     0 |
+|     103 | administration |    203 | 2006-08-05   |     0 |
+|     104 | marketing      |    204 | 2009-04-01   |     0 |
++---------+----------------+--------+--------------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table dept modify Dept_Name char(10);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc dept;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| dept_no      | int      | NO   | PRI | NULL    |       |
+| Dept_Name    | char(10) | YES  |     | NULL    |       |
+| mgr_id       | int      | NO   |     | NULL    |       |
+| mgr_strtdate | date     | NO   |     | NULL    |       |
+| phone_no     | int      | NO   |     | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop table dept;
+Query OK, 0 rows affected (0.03 sec)
