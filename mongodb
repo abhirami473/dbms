@@ -1,0 +1,272 @@
+Create a database (Eg : MyCev)
+	1.Create a collection (Eg: db_mca)
+  2.Create a collection (Eg: db_cs)
+  3.Insert 10 data to the collection
+  4.List the first 5 data from the collection (limit)
+  5.List the entire data except first 2 data (skip)
+  6.Sort the data by choosing any field in the collection
+  7.Delete data from the collection
+  8.Drop the collection (db_cs)
+  9.Drop Database
+
+QS : 2
+    Create a database Myclass
+    Create a collection named “db_students”
+      -> Should contain this fields : { student_name, student_rollno, mark[subject, mark] }
+       Nb: Mark should be stored as array
+       Insert details of 10 students in a class
+       List the entire students in the class
+       Update mark of any students in the collection “db_students”
+       Delete the data of first student in the collection
+
+
+QS : 3
+      {emp_name : “Sharath”, designation: “sales”, salary: 15000}
+      {emp_name : “Shyam”, designation: “manager”, salary: 50000}
+      {emp_name : “Abraham”, designation: “superwiser”, salary: 35000}
+      
+      
+ANSWER
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+school  0.000GB
+> use MyCev
+switched to db MyCev
+> db.createCollection("db_mca")
+{ "ok" : 1 }
+> db.createCollection("db_cs")
+{ "ok" : 1 }
+> db.db_mca.insert({"studentno":1,"firstname":"niya","lastname":"c","age":21})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":2,"firstname":"anju","lastname":"g","age":23})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":3,"firstname":"anu","lastname":"k","age":22})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":4,"firstname":"ram","lastname":"l","age":20})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":5,"firstname":"anil","lastname":"kumar","age":24})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":6,"firstname":"asha","lastname":"ar","age":25})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":7,"firstname":"sam","lastname":"j","age":22})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":8,"firstname":"manu","lastname":"tt","age":23})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":9,"firstname":"rahul","lastname":"c","age":28})
+WriteResult({ "nInserted" : 1 })
+> db.db_mca.insert({"studentno":10,"firstname":"sanju","lastname":"a","age":27})
+WriteResult({ "nInserted" : 1 })
+
+> db.db_mca.find({}).limit(5)
+{ "_id" : ObjectId("614abd62fa2ea907a689543f"), "studentno" : 1, "firstname" : "niya", "lastname" : "c", "age" : 21 }
+{ "_id" : ObjectId("614abd81fa2ea907a6895440"), "studentno" : 2, "firstname" : "anju", "lastname" : "g", "age" : 23 }
+{ "_id" : ObjectId("614abda1fa2ea907a6895441"), "studentno" : 3, "firstname" : "anu", "lastname" : "k", "age" : 22 }
+{ "_id" : ObjectId("614abdbdfa2ea907a6895442"), "studentno" : 4, "firstname" : "ram", "lastname" : "l", "age" : 20 }
+{ "_id" : ObjectId("614abde7fa2ea907a6895443"), "studentno" : 5, "firstname" : "anil", "lastname" : "kumar", "age" : 24 }
+> db.db_mca.find().skip(2)
+{ "_id" : ObjectId("614abda1fa2ea907a6895441"), "studentno" : 3, "firstname" : "anu", "lastname" : "k", "age" : 22 }
+{ "_id" : ObjectId("614abdbdfa2ea907a6895442"), "studentno" : 4, "firstname" : "ram", "lastname" : "l", "age" : 20 }
+{ "_id" : ObjectId("614abde7fa2ea907a6895443"), "studentno" : 5, "firstname" : "anil", "lastname" : "kumar", "age" : 24 }
+{ "_id" : ObjectId("614abe0cfa2ea907a6895444"), "studentno" : 6, "firstname" : "asha", "lastname" : "ar", "age" : 25 }
+{ "_id" : ObjectId("614abe2afa2ea907a6895445"), "studentno" : 7, "firstname" : "sam", "lastname" : "j", "age" : 22 }
+{ "_id" : ObjectId("614abe4cfa2ea907a6895446"), "studentno" : 8, "firstname" : "manu", "lastname" : "tt", "age" : 23 }
+{ "_id" : ObjectId("614abe66fa2ea907a6895447"), "studentno" : 9, "firstname" : "rahul", "lastname" : "c", "age" : 28 }
+{ "_id" : ObjectId("614abe8efa2ea907a6895448"), "studentno" : 10, "firstname" : "sanju", "lastname" : "a", "age" : 27 }
+> db.db_mca.find({},
+... {
+... "studentno":1,
+... "firstname":1,
+... }).sort({"firstname":1})
+{ "_id" : ObjectId("614abde7fa2ea907a6895443"), "studentno" : 5, "firstname" : "anil" }
+{ "_id" : ObjectId("614abd81fa2ea907a6895440"), "studentno" : 2, "firstname" : "anju" }
+{ "_id" : ObjectId("614abda1fa2ea907a6895441"), "studentno" : 3, "firstname" : "anu" }
+{ "_id" : ObjectId("614abe0cfa2ea907a6895444"), "studentno" : 6, "firstname" : "asha" }
+{ "_id" : ObjectId("614abe4cfa2ea907a6895446"), "studentno" : 8, "firstname" : "manu" }
+{ "_id" : ObjectId("614abd62fa2ea907a689543f"), "studentno" : 1, "firstname" : "niya" }
+{ "_id" : ObjectId("614abe66fa2ea907a6895447"), "studentno" : 9, "firstname" : "rahul" }
+{ "_id" : ObjectId("614abdbdfa2ea907a6895442"), "studentno" : 4, "firstname" : "ram" }
+{ "_id" : ObjectId("614abe2afa2ea907a6895445"), "studentno" : 7, "firstname" : "sam" }
+{ "_id" : ObjectId("614abe8efa2ea907a6895448"), "studentno" : 10, "firstname" : "sanju" }
+> db.db_mca.remove({"studentno":5})
+WriteResult({ "nRemoved" : 1 })
+> db.dbmca.find()
+> db.db_mca.find()
+{ "_id" : ObjectId("614abd62fa2ea907a689543f"), "studentno" : 1, "firstname" : "niya", "lastname" : "c", "age" : 21 }
+{ "_id" : ObjectId("614abd81fa2ea907a6895440"), "studentno" : 2, "firstname" : "anju", "lastname" : "g", "age" : 23 }
+{ "_id" : ObjectId("614abda1fa2ea907a6895441"), "studentno" : 3, "firstname" : "anu", "lastname" : "k", "age" : 22 }
+{ "_id" : ObjectId("614abdbdfa2ea907a6895442"), "studentno" : 4, "firstname" : "ram", "lastname" : "l", "age" : 20 }
+{ "_id" : ObjectId("614abe0cfa2ea907a6895444"), "studentno" : 6, "firstname" : "asha", "lastname" : "ar", "age" : 25 }
+{ "_id" : ObjectId("614abe2afa2ea907a6895445"), "studentno" : 7, "firstname" : "sam", "lastname" : "j", "age" : 22 }
+{ "_id" : ObjectId("614abe4cfa2ea907a6895446"), "studentno" : 8, "firstname" : "manu", "lastname" : "tt", "age" : 23 }
+{ "_id" : ObjectId("614abe66fa2ea907a6895447"), "studentno" : 9, "firstname" : "rahul", "lastname" : "c", "age" : 28 }
+{ "_id" : ObjectId("614abe8efa2ea907a6895448"), "studentno" : 10, "firstname" : "sanju", "lastname" : "a", "age" : 27 }
+> db.db_cs.drop()
+true
+> use MyCev
+switched to db MyCev
+> db.dropDatabase()
+{ "ok" : 1 }
+>
+
+use Myclass
+switched to db Myclass
+> db.createCollection("db_Students")
+{ "ok" : 1 }
+
+
+
+> db.db_student.insert([{"student_name":"Amrutha","student_rollno":19,"mark":[{"maths":50}]},
+{"student_name":"Anu","student_rollno":12,"mark":[{"maths":60}]},
+{"student_name":"Arathi","student_rollno":15,"mark":[{"maths":55}]},
+{"student_name":"Aswana","student_rollno":21,"mark":[{"maths":50}]},
+{"student_name":"Ammu","student_rollno":11,"mark":[{"maths":45}]},
+{"student_name":"sruthi","student_rollno":55,"mark":[{"maths":52}]},
+{"student_name":"Anjana","student_rollno":13,"mark":[{"maths":50}]},
+{"student_name":"Aparna","student_rollno":14,"mark":[{"maths":53}]},
+{"student_name":"Athira","student_rollno":25,"mark":[{"maths":50}]}, {"student_name":"Akshaya","student_rollno":7,"mark":[{"maths":50}]}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 10,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+
+ db.db_student.find()
+{ "_id" : ObjectId("614ab98a6fbf298a7592d0c0"), "student_name" : "Aru", "student_rollno" : 17, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c1"), "student_name" : "Amrutha", "student_rollno" : 19, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c2"), "student_name" : "Anu", "student_rollno" : 12, "mark" : [ { "maths" : 60 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c3"), "student_name" : "Arathi", "student_rollno" : 15, "mark" : [ { "maths" : 55 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c4"), "student_name" : "Aswana", "student_rollno" : 21, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c5"), "student_name" : "Ammu", "student_rollno" : 11, "mark" : [ { "maths" : 45 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c6"), "student_name" : "sruthi", "student_rollno" : 55, "mark" : [ { "maths" : 52 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c7"), "student_name" : "Anjana", "student_rollno" : 13, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c8"), "student_name" : "Aparna", "student_rollno" : 14, "mark" : [ { "maths" : 53 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c9"), "student_name" : "Athira", "student_rollno" : 25, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0ca"), "student_name" : "Akshaya", "student_rollno" : 7, "mark" : [ { "maths" : 50 } ] }
+> db.db_student.upadteOne({"mark":[{"maths":55}]},{$set:{"mark":[{"maths:53}]}})
+
+
+
+db.db_student.updateOne({"mark":[{"maths":55}]},{$set:{"mark":[{"maths":53}]}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.db_student.find()
+{ "_id" : ObjectId("614ab98a6fbf298a7592d0c0"), "student_name" : "Aru", "student_rollno" : 17, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c1"), "student_name" : "Amrutha", "student_rollno" : 19, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c2"), "student_name" : "Anu", "student_rollno" : 12, "mark" : [ { "maths" : 60 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c3"), "student_name" : "Arathi", "student_rollno" : 15, "mark" : [ { "maths" : 53 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c4"), "student_name" : "Aswana", "student_rollno" : 21, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c5"), "student_name" : "Ammu", "student_rollno" : 11, "mark" : [ { "maths" : 45 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c6"), "student_name" : "sruthi", "student_rollno" : 55, "mark" : [ { "maths" : 52 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c7"), "student_name" : "Anjana", "student_rollno" : 13, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c8"), "student_name" : "Aparna", "student_rollno" : 14, "mark" : [ { "maths" : 53 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c9"), "student_name" : "Athira", "student_rollno" : 25, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0ca"), "student_name" : "Akshaya", "student_rollno" : 7, "mark" : [ { "maths" : 50 } ] }
+
+
+
+
+> db.db_student.remove({_id : ObjectId("614ab98a6fbf298a7592d0c0")})
+WriteResult({ "nRemoved" : 1 })
+> db.db_student.find()
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c1"), "student_name" : "Amrutha", "student_rollno" : 19, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c2"), "student_name" : "Anu", "student_rollno" : 12, "mark" : [ { "maths" : 60 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c3"), "student_name" : "Arathi", "student_rollno" : 15, "mark" : [ { "maths" : 53 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c4"), "student_name" : "Aswana", "student_rollno" : 21, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c5"), "student_name" : "Ammu", "student_rollno" : 11, "mark" : [ { "maths" : 45 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c6"), "student_name" : "sruthi", "student_rollno" : 55, "mark" : [ { "maths" : 52 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c7"), "student_name" : "Anjana", "student_rollno" : 13, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c8"), "student_name" : "Aparna", "student_rollno" : 14, "mark" : [ { "maths" : 53 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0c9"), "student_name" : "Athira", "student_rollno" : 25, "mark" : [ { "maths" : 50 } ] }
+{ "_id" : ObjectId("614abbc26fbf298a7592d0ca"), "student_name" : "Akshaya", "student_rollno" : 7, "mark" : [ { "maths" : 50 } ] }
+>
+
+> use employee
+switched to db employee
+
+> db.createCollection("db_employees")
+{ "ok" : 1 }
+> db.db_employee.insert([{
+... emp_name :"Sharath",designation:"sales",salary:15000},{emp_name :"Shyam",designation:"manager",salary:50000},{emp_name :"Abraham",designation:"superwiser",salary: 35000}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 3,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.db_employee.insert([{emp_name:"Muhammed",designation:"sales",salary:15000},{emp_name:"Rohith",designation:"sales",salary:2000}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 2,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.db_employee.insert([{emp_name : "Nirmal", designation: "driver", salary: 20000},{emp_name : "Samuel", designation: "superwiser", salary: 35000},{emp_name : "Johns", designation: "sales", salary: 15000}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 3,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.db_employee.find()
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cb"), "emp_name" : "Sharath", "designation" : "sales", "salary" : 15000 }
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cc"), "emp_name" : "Shyam", "designation" : "manager", "salary" : 50000 }
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cd"), "emp_name" : "Abraham", "designation" : "superwiser", "salary" : 35000 }
+{ "_id" : ObjectId("614ad0c46fbf298a7592d0ce"), "emp_name" : "Muhammed", "designation" : "sales", "salary" : 15000 }
+{ "_id" : ObjectId("614ad0c46fbf298a7592d0cf"), "emp_name" : "Rohith", "designation" : "sales", "salary" : 2000 }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d0"), "emp_name" : "Nirmal", "designation" : "driver", "salary" : 20000 }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d1"), "emp_name" : "Samuel", "designation" : "superwiser", "salary" : 35000 }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d2"), "emp_name" : "Johns", "designation" : "sales", "salary" : 15000 }
+
+
+> db.db_employee.find({"salary":{$gt:15000}},{"designation":"superwisor"})
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cc"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cd"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d0"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d1"), "designation" : "superwisor" }
+
+
+> db.db_employee.find({"designation":"sales"})
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cb"), "emp_name" : "Jamsheer", "designation" : "sales", "salary" : 15000 }
+{ "_id" : ObjectId("614ad0c46fbf298a7592d0ce"), "emp_name" : "Muhammed", "designation" : "sales", "salary" : 15000 }
+{ "_id" : ObjectId("614ad0c46fbf298a7592d0cf"), "emp_name" : "Rohith", "designation" : "sales", "salary" : 2000 }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d2"), "emp_name" : "Johns", "designation" : "sales", "salary" : 15000 }
+
+
+> db.db_employee.updateOne({"emp_name":"Sharath"},{$set:{"emp_name":"Jamsheer"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.db_employee.find({"emp_name":"Jamsheer"})
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cb"), "emp_name" : "Jamsheer", "designation" : "sales", "salary" : 15000 }
+
+
+> db.db_employee.aggregate([{$group:{_id:"$sales",salary:{$sum:"$salary"}}}])
+{ "_id" : null, "salary" : 187000 }
+> db.db_employee.find({"salary":{$gt:15000}},{"designation":"superwisor"})
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cc"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614acedb6fbf298a7592d0cd"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d0"), "designation" : "superwisor" }
+{ "_id" : ObjectId("614ad12e6fbf298a7592d0d1"), "designation" : "superwisor" }
+> db.db_employee({"designation":"sales"})
+      
+      
